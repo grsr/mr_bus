@@ -1,18 +1,8 @@
 'use strict';
 var crypto = require('crypto');
-var API_KEY = 'BALP1FHBFMR2GJHRE8Q4NTF88';
 var http = require('http');
 
 var services = {"36235627": {"23": true, "27": true}, "36235628": {"8": true}};
-
-/**
- * This sample demonstrates a simple skill built with the Amazon Alexa Skills Kit.
- * The Intent Schema, Custom Slots, and Sample Utterances for this skill, as well as
- * testing instructions are located at http://amzn.to/1LzFrj6
- *
- * For additional samples, visit the Alexa Skills Kit Getting Started guide at
- * http://amzn.to/1LGWsLG
- */
 
 // --------------- Helpers that build all of the responses -----------------------
 
@@ -113,7 +103,7 @@ function getBusTimes(intent, session, callback) {
 
     console.log('time: '+time);
 
-    md5sum.update(API_KEY+time);
+    md5sum.update(process.env.API_KEY+time);
 
     var key = md5sum.digest('hex');
 
@@ -150,9 +140,6 @@ function getBusTimes(intent, session, callback) {
 
     req.end();
 }
-
-
-// --------------- Events -----------------------
 
 /**
  * Called when the session starts.
@@ -198,27 +185,13 @@ function onIntent(intentRequest, session, callback) {
  */
 function onSessionEnded(sessionEndedRequest, session) {
     console.log(`onSessionEnded requestId=${sessionEndedRequest.requestId}, sessionId=${session.sessionId}`);
-    // Add cleanup logic here
 }
-
-
-// --------------- Main handler -----------------------
 
 // Route the incoming request based on type (LaunchRequest, IntentRequest,
 // etc.) The JSON body of the request is provided in the event parameter.
 exports.handler = (event, context, callback) => {
     try {
-        //console.log(`event.session.application.applicationId=${event.session.application.applicationId}`);
-
-        /**
-         * Uncomment this if statement and populate with your skill's application ID to
-         * prevent someone else from configuring a skill that sends requests to this function.
-         */
-        /*
-        if (event.session.application.applicationId !== 'amzn1.echo-sdk-ams.app.[unique-value-here]') {
-             callback('Invalid Application ID');
-        }
-        */
+        console.log(`event.session.application.applicationId=${event.session.application.applicationId}`);
 
         if (event.session.new) {
             onSessionStarted({ requestId: event.request.requestId }, event.session);
