@@ -1,0 +1,13 @@
+{
+  "intents": [
+    {
+      "intent": "GetBusTimes"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    }
+  ]
+}
